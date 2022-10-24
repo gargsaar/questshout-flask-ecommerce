@@ -4,10 +4,6 @@ FROM python:3.9
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Stripe Secrets
-ENV STRIPE_SECRET_KEY      sk_test_51KcJJ6Gk8l5l5ZPVw3BwkhE2aiMiOAOblnCbuCsUoituRX9prgkm9yIl8mcugEID3OfaHeBCmvNPP4ZAx4OIjl0300iSBdub7z
-ENV STRIPE_PUBLISHABLE_KEY pk_test_51KcJJ6Gk8l5l5ZPVkc5r6Vsp1rcfIy5dwIyYkbtklsTjQYSIUKfRQgOdIOXYFpuAH6BrCsZRreX6H3umc63ZDI7l00lIf9tA5t
-
 # Used by Stripe for callback URL 
 # for successful payment and cancelled
 ENV SERVER_ADDRESS http://localhost:5085/
