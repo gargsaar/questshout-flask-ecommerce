@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 import os, json
 
 # Flask modules
@@ -15,7 +10,6 @@ from app.util import get_products, Product, load_product, load_product_by_slug
 
 import stripe
 import analytics
-import uuid
 
 # Stripe Credentials
 stripe_keys = {
@@ -44,12 +38,6 @@ def cancelled():
 def create_checkout_session(path):
 
     product = load_product_by_slug( path )
-
-    analytics.track(str(uuid.uuid4()), 'Checkout', {
-        'payment': 'credit-card',
-        'product': product.name,
-        'price': product.price
-    })
 
     domain_url = app.config['SERVER_ADDRESS']
     stripe.api_key = stripe_keys["secret_key"]

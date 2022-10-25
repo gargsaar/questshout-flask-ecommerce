@@ -14,7 +14,7 @@
   <!-- End Navbar -->
   <!-- -------- START HEADER 7 w/ text and video ------- -->
   <header class="bg-gradient-dark">
-    <div class="page-header section-height-75" 
+    <div class="page-header section-height-75"
          style="background-image: url('/static/products/{{ product.slug }}/cover.jpg');">
       <span class="mask bg-gradient-info opacity-6">
       </span>
@@ -27,18 +27,18 @@
             <p class="lead mb-4 text-white opacity-8">
               {{ product.info }}
             </p>
-            
+
             <!-- used to trigger the right product -->
             <span style="display:none" id="product_slug">{{ product.slug }}</span>
 
             {% if config.STRIPE_IS_ACTIVE %}
               <!-- Button trigger modal -->
-               <button type="button" class="btn bg-white text-dark" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+               <button type="button" class="btn bg-white text-dark" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="sendTrack('{{product.name}}','{{product.price}}')">
                   Buy Product - ${{ product.price }}
                </button>
             {% else %}
-              <button type="button" class="btn bg-white text-dark" 
-                      data-bs-toggle="modal" 
+              <button type="button" class="btn bg-white text-dark"
+                      data-bs-toggle="modal"
                       data-bs-target="#stripeModal">
                 Buy Product - ${{ product.price }}
               </button>
@@ -128,12 +128,12 @@
   <section class="py-7">
     <div class="container">
       <div class="row align-items-center">
-      
+
         <div class="col-lg-6">
           <div class="row justify-content-left">
 
             <div class="col-md-12">
-            
+
               <div class="info">
                 <div class="icon icon-shape text-center">
                   <svg class="text-info" width="43px" height="20px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -155,7 +155,7 @@
                   Product Description
                 </h5>
                 <p>
-                  {{ product.full_description }}  
+                  {{ product.full_description }}
                 </p>
 
                 <div style="padding-top:2.5em">
@@ -214,7 +214,7 @@
                   <p class="card-description text-white">
                     Keep yourself up-to-date with the latest in the world of sports
                   </p>
-                  <a target="_blank" href=""
+                  <a href=""
                      class="text-white icon-move-right">
                     Know More
                     <i class="fas fa-arrow-right text-sm"></i>
@@ -231,7 +231,7 @@
 
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
+<!-- Specific JS goes HERE -->
 {% block javascripts %}
 
   <script src="https://js.stripe.com/v3/"></script>
@@ -258,6 +258,13 @@
       analytics.identify(id, {
         email: document.getElementById('user_email').value,
         address: document.getElementById('shipping_address').value
+      });
+    }
+    let sendTrack = (productName, productPrice) => {
+      analytics.track('Checkout', {
+        method: 'stripe-checkout',
+        product: productName,
+        price: productPrice
       });
     }
   </script>

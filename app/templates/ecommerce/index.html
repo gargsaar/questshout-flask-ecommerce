@@ -133,8 +133,8 @@
                   <p class="card-description text-white">
                     Subscribe to keep yoursefl up-to-date with the latest in the world of sports
                   </p>
-                  <a target="_blank" href=""
-                     class="text-white icon-move-right">
+                  <a href=""
+                     class="text-white icon-move-right" onclick="sendAnalytics()">
                     Know More
                     <i class="fas fa-arrow-right text-sm"></i>
                   </a>
@@ -156,9 +156,12 @@
   <script src="/static/assets/js/soft-design-system.min.js?v=1.0.1" type="text/javascript"></script>
 
   <script>
-    analytics.track('Subscription', {
-      plan: 'QuestShout Community',
+    let sendAnalytics = () => {
+      analytics.track('Subscription', {
+      type: 'Newsletter',
     });
+    }
+
   </script>
 
 {% endblock javascripts %}

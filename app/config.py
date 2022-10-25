@@ -17,7 +17,7 @@ class Config(object):
 
     STRIPE_SECRET_KEY      = os.getenv('STRIPE_SECRET_KEY'     , None )
     STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', None )
-    SERVER_ADDRESS         = os.getenv('SERVER_ADDRESS', 'http://localhost:5000/')
+    SERVER_ADDRESS         = os.getenv('SERVER_ADDRESS', 'https://questshout-on-render.onrender.com/')
 
     STRIPE_IS_ACTIVE       = False
     if STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY:
