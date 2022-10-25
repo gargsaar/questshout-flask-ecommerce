@@ -101,9 +101,21 @@
                         <input id="user_email" type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email"
                                aria-describedby="email-addon">
                       </div>
+                       <div class="mb-3">
+                        <input id="first_name" class="form-control form-control-lg" placeholder="First Name" aria-label="First Name"
+                               aria-describedby="fname-addon">
+                      </div>
+                       <div class="mb-3">
+                        <input id="last_name" class="form-control form-control-lg" placeholder="Last Name" aria-label="Last Name"
+                               aria-describedby="lname-addon">
+                      </div>
                       <div class="mb-3">
                         <textarea id="shipping_address" class="form-control form-control-lg" placeholder="Shipping Address" aria-label="Address"
                                   aria-describedby="address-addon"></textarea>
+                      </div>
+                       <div class="mb-3">
+                        <input id="address_type" class="form-control form-control-lg" placeholder="Address Type" aria-label="Address Type"
+                               aria-describedby="addresstype-addon">
                       </div>
                     </div>
                   </div>
@@ -257,7 +269,10 @@
       id = analytics.user().anonymousId();
       analytics.identify(id, {
         email: document.getElementById('user_email').value,
-        address: document.getElementById('shipping_address').value
+        address: document.getElementById('shipping_address').value,
+        first_name: document.getElementById('first_name').value,
+        last_name: document.getElementById('last_name').value,
+        address_type: document.getElementById('address_type').value
       });
     }
     let sendTrack = (productName, productPrice) => {
