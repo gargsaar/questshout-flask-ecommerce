@@ -117,10 +117,22 @@
           </li>
 
           <li class="nav-item my-auto ms-3 ms-lg-0">
-            <a target="_blank" href="https://questshout.zendesk.com/hc/en-us/requests/new" class="btn btn-sm  bg-white  btn-round mb-0 me-1 mt-2 mt-md-0">Support</a>
+            <a target="_blank" href="https://questshout.zendesk.com/hc/en-us/requests/new" class="btn btn-sm  bg-white  btn-round mb-0 me-1 mt-2 mt-md-0" onclick="sendAnalytics()">Support</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  
+
+  <!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script>
+    let sendAnalytics = () => {
+      analytics.track('Support', {
+      action: 'Support Request',
+    });
+    }
+  </script>
+
+{% endblock javascripts %}
