@@ -11,6 +11,7 @@ from app.util import get_products, Product, load_product, load_product_by_slug
 import stripe
 import analytics
 
+
 # Stripe Credentials
 stripe_keys = {
     "secret_key"     : app.config['STRIPE_SECRET_KEY'     ] ,
@@ -20,6 +21,11 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys["secret_key"]
 analytics.write_key = app.config['SEGMENT_ANALYTICS_WRITEKEY']
+
+
+@app.route("/contextstore")
+def contextstore():
+    return render_template("contextstore/context-store.html")
 
 @app.route("/config")
 def get_publishable_key():

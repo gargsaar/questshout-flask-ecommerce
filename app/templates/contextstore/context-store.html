@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/static/assets/img/favicon.png">
+  <link rel="canonical" href=""/>
+
+  <title>
+    Segment | Context Store
+  </title>
+
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/static/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/static/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="/static/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/static/assets/css/soft-design-system.css?v=1.0.1" rel="stylesheet" />
+
+  <!-- Specific CSS goes HERE -->
+  {% block stylesheets %}{% endblock stylesheets %}
+</head>
+
+<body class="blog-author bg-gray-100">
+    <div class="container">
+        <div class="row" style="padding: 1.5em;">
+            <h3 style="background-color: mediumseagreen; padding-left:0.75em;padding-top:0.5em;padding-bottom: 0.5em;">Segment | Context Store (Concept)</h3>
+            <p style="padding-top:0.5em;">Context Store is a knowledge graph to surface a holistic view of a customer's engagement by unifying customer data spread across systems.
+                This can then be used for entity resolution across touch points and building the “Golden Profile”. </p>
+        </div>
+        <div class="row">
+            <div class="accordion" id="accordionExample" style="padding-left: 1.5em; padding-right: 2em;">
+              <div class="accordion-item" style="padding-bottom: 1.5em;">
+                <h2 class="accordion-header" id="headingThree" style="background-color: lightgrey;">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    STEP 1: Define the Profile Data Model
+                  </button>
+                </h2>
+                <!-- Modal -->
+                <div class="modal fade" id="addObjectModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Object</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <input class="form-control" type="text" value="Object Name">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="addFieldModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addFieldModalLabel">Add Field</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <select class="form-select" aria-label="Select Object" style="margin-bottom:0.5em">
+                          <option selected>Select Object</option>
+                          <option value="1">Person</option>
+                          <option value="2">Tickets</option>
+                          <option value="3">Payments</option>
+                        </select>
+                        <input class="form-control" type="text" value="Field Name" style="margin-bottom:0.5em">
+                        <select class="form-select" aria-label="Select Data Type" style="margin-bottom:0.5em">
+                          <option selected>Select Data Type</option>
+                          <option value="1">Text</option>
+                          <option value="2">Number</option>
+                          <option value="3">Datetime</option>
+                          <option value="3">Boolean</option>
+                        </select>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p>The first step is to define the profile data model. A data model is a set of rules that represent and validate the structure and format of data. At a high level, data model provide an abstract definition of a real-world object (such as a person) and outline what data should be included in each instance of that object (such as first name, last name, birthday, and so on).</p>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon3">Data Model Name:</span>
+                      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="basic_profile">
+                    </div>
+                    <div class="row" style="margin-top:2em;margin-bottom:1em;">
+                      <div class="col-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addObjectModal" style="background-color:darkseagreen;width:100%">Add Object</button>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFieldModal" style="background-color:darkseagreen;width:100%">Add Field</button>
+                      </div>
+                    </div>
+                    <div class="container px-4 text-center">
+                      <div class="row gx-5">
+                        <div class="col">
+                         <div class="p-3 border bg-light">
+                              Person [Object]
+                         </div>
+                        </div>
+                        <div class="col">
+                          <div class="p-3 border bg-light">
+                              Tickets [Object]
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="p-3 border bg-light">
+                              Charges [Object]
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row gx-5">
+                        <div class="col">
+                         <div class="p-3 border bg-white">
+                              <ul class="list-group">
+                                <li class="list-group-item">Full Name [Text]</li>
+                              </ul>
+                         </div>
+                        </div>
+                        <div class="col">
+                          <div class="p-3 border bg-white">
+                              <ul class="list-group">
+                                <li class="list-group-item">Type [Text]</li>
+                                <li class="list-group-item">Description [Text]</li>
+                                <li class="list-group-item">Status [Text]</li>
+                                <li class="list-group-item">Product [Text]</li>
+                                <li class="list-group-item">Created At [Datetime]</li>
+                              </ul>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="p-3 border bg-white">
+                              <ul class="list-group">
+                                <li class="list-group-item">Amount [Number]</li>
+                                <li class="list-group-item">Currency [Text]</li>
+                                <li class="list-group-item">Status [Text]</li>
+                                <li class="list-group-item">Created At [Datetime]</li>
+                              </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item" style="padding-bottom: 1.5em;">
+                <!-- Modal -->
+                <div class="modal fade" id="updateSourceFields" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateSourceFieldsLabel">Data Model Mapping</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p><strong>Object:</strong> Person</p>
+                        <p><strong>Data Model Field:</strong> Full Name</p>
+                        <p><strong>Source Fields:</strong></p>
+                        <div class="container px-4 text-center">
+                          <div class="row gx-5">
+                          <div class="col">
+                           <div class="p-3 border bg-light">QuestShout_Zendesk</div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border bg-light">QuestShout_Stripe</div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border bg-light">QuestShout_Hubspot</div>
+                          </div>
+                        </div>
+                          <div class="row gx-5">
+                          <div class="col">
+                           <div class="p-3 border">
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
+                                style="background-color:darkseagreen;width:100%">
+                                  Tickets
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample" style="margin-bottom:1.5em">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched">id [primary key]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched">created_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched">requester_id [integer]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fourthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fourthCheckboxStretched">subject [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched">description [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched">priority [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="seventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="seventhCheckboxStretched">customer_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eightCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eightCheckboxStretched">product_name [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="ninthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="ninthCheckboxStretched">status [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="tenthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="tenthCheckboxStretched">tags [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eleventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eleventhCheckboxStretched">type [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample-1" role="button" aria-expanded="false" aria-controls="collapseExample-1" style="background-color:darkseagreen;width:100%">
+                                  Users
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample-1">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">created_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">organization_id [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">email [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">role [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                             <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2" style="background-color:darkseagreen;width:100%">
+                                  Organizations
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample2">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">created_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">url [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">shared_tickets [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">uuid_ts [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                           </div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border">
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3" style="background-color:darkseagreen;width:100%">
+                                  Charges
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample3" style="margin-bottom:1.5em">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched">id [primary key]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched">received_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched">amount [integer]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fourthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fourthCheckboxStretched">card_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched">currency [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched">customer_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="seventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="seventhCheckboxStretched">payment_intent_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eightCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eightCheckboxStretched">description [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="ninthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="ninthCheckboxStretched">paid [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="tenthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="tenthCheckboxStretched">payment_method_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eleventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eleventhCheckboxStretched">status [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eleventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eleventhCheckboxStretched">balance_transaction_id [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample4" style="background-color:darkseagreen;width:100%">
+                                  Customers
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample4">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">received_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">currency [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">description [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">email [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">default_source [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample5" role="button" aria-expanded="false" aria-controls="collapseExample5" style="background-color:darkseagreen;width:100%">
+                                  Invoices
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample5">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">received_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">customer_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">total [integer]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">amount_due [integer]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">paid [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">currency [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">attempt_count [integer]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">date [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">forgiven [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">period_start [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">period_end [timestamp]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample6" role="button" aria-expanded="false" aria-controls="collapseExample6" style="background-color:darkseagreen;width:100%">
+                                  Payment Intents
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample6">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">created at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">organization id [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">email [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">role [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample7" role="button" aria-expanded="false" aria-controls="collapseExample7" style="background-color:darkseagreen;width:100%">
+                                  Payment Methods
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample7">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">created at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">organization id [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">email [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">role [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample8" role="button" aria-expanded="false" aria-controls="collapseExample8" style="background-color:darkseagreen;width:100%">
+                                  Products
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample8">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">created at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">organization id [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">email [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">role [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border">
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample9" role="button" aria-expanded="false" aria-controls="collapseExample9" style="background-color:darkseagreen;width:100%">
+                                  Contacts
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample9" style="margin-bottom:1.5em">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched">id [primary key]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched">received_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched">email [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fourthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fourthCheckboxStretched">properties_company_value [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched">properties_firstname_value [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched">properties_lastname_value [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="seventhCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="seventhCheckboxStretched">portal_id [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="eightCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="eightCheckboxStretched">lead_guid [string]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="ninthCheckboxStretched">
+                                      <label class="form-check-label stretched-link" for="ninthCheckboxStretched">is_contact [boolean]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample10" role="button" aria-expanded="false" aria-controls="collapseExample10" style="background-color:darkseagreen;width:100%">
+                                  Companies
+                                </a>
+                              </p>
+                              <div class="collapse" id="collapseExample10">
+                                <div class="card card-body">
+                                  <ul class="list-group" style="height:13em;overflow-y: scroll;">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="firstCheckboxStretched-1">id [primary key</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="secondCheckboxStretched-1">received_at [timestamp]</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="thirdCheckboxStretched-1">name [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="sixthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="sixthCheckboxStretched-1">website [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="forthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="forthCheckboxStretched-1">domain [string]</label>
+                                    </li>
+                                                                        <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="fifthCheckboxStretched-1">
+                                      <label class="form-check-label stretched-link" for="fifthCheckboxStretched-1">portal_ud [string]</label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <p><strong>Data Transformation:</strong></p>
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select a Function
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Concat()</a></li>
+                            <li><a class="dropdown-item" href="#">Exclude()</a></li>
+                            <li><a class="dropdown-item" href="#">Decimals()</a></li>
+                          </ul>
+                        </div>
+                        <textarea class="form-control" type="text" value="write your function">concat(questshout_hubspot.contacts.properties_firstname_value, questshout_hubspot.contacts.properties_lastname_value)</textarea>
+                        <p style="margin-top:0.5em;"><strong>Identifier:</strong></p>
+                        <input class="form-control" type="text" placeholder="questshout_hubspot.contacts.email">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h2 class="accordion-header" id="headingOne" style="background-color: lightgrey;">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    STEP 2: Map the Data Model Fields & Define Relationships
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <div style="margin-bottom:1em;margin-top:1em;color:darkseagreen;"><b>Data Model Mapping</b></div>
+                    <div class="table-responsive" style="height:25em;overflow-y:scroll;">
+                      <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Object</th>
+                          <th scope="col">Data Model Field</th>
+                          <th scope="col">Source Fields</th>
+                          <th scope="col">Transformations</th>
+                          <th scope="col">Identifier</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Person</th>
+                          <td>Full Name</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_hubspot.contacts.properties_firstname_value</li>
+                              <li class="list-group-item">questshout_hubspot.contacts.properties_lastname_value</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">concat(questshout_hubspot.contacts.properties_firstname_value, questshout_hubspot.contacts.properties_lastname_value)</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_hubspot.contacts.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Tickets</th>
+                          <td>Type</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_zendesk.tickets.type</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">exclude(questshout_zendesk.tickets.type='incident')</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_zendesk.tickets.requester_id = questshout_zendesk.users.id) => questshout_zendesk.users.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Tickets</th>
+                          <td>Description</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_zendesk.tickets.description</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_zendesk.tickets.requester_id = questshout_zendesk.users.id) => questshout_zendesk.users.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Tickets</th>
+                          <td>Status</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_zendesk.tickets.status</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_zendesk.tickets.requester_id = questshout_zendesk.users.id) => questshout_zendesk.users.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Tickets</th>
+                          <td>Product</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_zendesk.tickets.product_name</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_zendesk.tickets.requester_id = questshout_zendesk.users.id) => questshout_zendesk.users.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Tickets</th>
+                          <td>Created At</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_zendesk.tickets.created_at</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_zendesk.tickets.requester_id = questshout_zendesk.users.id) => questshout_zendesk.users.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Charges</th>
+                          <td>Amount</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_stripe.charges.amount</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">decimals(2)</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_stripe.charges.customer_id = questshout_customers.id) => questshout_stripe.customers.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Charges</th>
+                          <td>Currency</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_stripe.charges.currency</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_stripe.charges.customer_id = questshout_customers.id) => questshout_stripe.customers.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Charges</th>
+                          <td>Status</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_stripe.charges.status</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_stripe.charges.customer_id = questshout_customers.id) => questshout_stripe.customers.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Charges</th>
+                          <td>Created At</td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">questshout_stripe.charges.created_at</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">-</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul class="list-group">
+                              <li class="list-group-item">(questshout_stripe.charges.customer_id = questshout_customers.id) => questshout_stripe.customers.email</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSourceFields" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                    <div style="margin-bottom:1em;margin-top:2em;color:darkseagreen;"><b>Object Relationships</b></div>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Object1</th>
+                          <th scope="col">Object2</th>
+                          <th scope="col">Relationship Condition</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">Person</td>
+                          <td scope="row">Tickets</td>
+                          <td scope="row">(questshout_hubspot.contacts.email = questshout_zendesk.users.email) && (questshout_zendesk.tickets.status = 'open')</td>
+                          <td scope="row">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" style="background-color:darkseagreen;margin-top:1.5em;">Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+              </div>
+              <div class="accordion-item" style="padding-bottom: 1.5em;">
+                <h2 class="accordion-header" id="headingTwo" style="background-color: lightgrey;">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                    STEP 3: Data Model Preview
+                  </button>
+                </h2>
+                <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <form class="row g-3">
+                        <div class="col-auto">
+                          <input type="text" class="form-control" id="identifier" placeholder="Identifier">
+                        </div>
+                        <div class="col-auto">
+                          <button type="submit" class="btn btn-primary mb-3" style="background-color:darkseagreen;">Preview</button>
+                        </div>
+                      </form>
+                    <p style="padding-top:1em;padding-bottom:0.5em;"><strong>Common Identifier:</strong> john.doe@fmail.com</p>
+                    <div class="container px-4 text-center">
+                      <div class="row gx-5">
+                          <div class="col">
+                           <div class="p-3 border bg-light">Person</div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border bg-light">Tickets</div>
+                          </div>
+                          <div class="col">
+                            <div class="p-3 border bg-light">Charges</div>
+                          </div>
+                        </div>
+                      <div class="row gx-5">
+                        <div class="col">
+                           <div class="p-3 border">
+                            <ul class="list-group">
+                              <li class="list-group-item">Full Name: John Doe</li>
+                            </ul>
+                           </div>
+                          </div>
+                        <div class="col">
+                           <div class="p-3 border">
+                            <ul class="list-group">
+                              <li class="list-group-item">Type: Problem</li>
+                              <li class="list-group-item">Description: Not comfortable at all</li>
+                              <li class="list-group-item">Status: Open</li>
+                              <li class="list-group-item">Product: Nike Dynamo Go FlyEase</li>
+                              <li class="list-group-item">Created At: 22 Oct 2022, 10:05:27</li>
+                            </ul>
+                           </div>
+                          </div>
+                        <div class="col">
+                           <div class="p-3 border">
+                            <ul class="list-group">
+                              <li class="list-group-item">Status: Succeed</li>
+                              <li class="list-group-item">Amount: $3500</li>
+                              <li class="list-group-item">Currency: USD</li>
+                              <li class="list-group-item">Created At: 24 Oct 2022 16:39:32</li>
+                            </ul>
+                           </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item" style="padding-bottom: 1.5em;">
+                <h2 class="accordion-header" id="headingTwo" style="background-color: lightgrey;">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    STEP 4: Context API
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">https://app.segment.com/contextapi/</span>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="basic_profile/john.doe@fmail.com">
+                      </div>
+                      <pre>
+                        <code>{
+                                "dm:identityMap": {
+                                  "common_identifier": {
+                                      "email": "john.doe@fmail.com"
+                                  },
+                                  "identities": {
+                                      "Hubspot": {
+                                          "contact.email": "john.doe@fmail.com"
+                                      },
+                                      "Zendesk": {
+                                          "charges.customer_id": "cus_WP90YU",
+                                          "customers.id": "cus_WP90YU",
+                                          "customers.email": "john.doe@fmail.com"
+                                      },
+                                      "Stripe": {
+                                          "user.id": "22WP90YU",
+                                          "requester.id": "22WP90YU",
+                                          "user.email": "john.doe@fmail.com"
+                                      },
+                                },
+                                "object:person": {
+                                  "Full Name": "John Doe"
+                                },
+                                "object:tickets": [
+                                  {
+                                    "type": "problem",
+                                    "Description": "Not comfortable at all",
+                                    "Status": "Open",
+                                    "Product": "Nike Dynamo Go FlyEase",
+                                    "Created At": "2022-10-26T15:52:25+00:00"
+                                  },
+                                  {
+                                    "type": "problem",
+                                    "Description": "Quality not up to expectations",
+                                    "Status": "Open",
+                                    "Product": "Nike Goalkeeper match",
+                                    "Created At": "2022-10-26T15:52:25+00:00"
+                                  }
+                                ],
+                                "object:charges": {
+                                  "Amount": "3500",
+                                  "Currency": "USD",
+                                  "Status": "succeed",
+                                  "Created At": "2022-10-26T15:52:25+00:00"
+                                },
+                                "dm:metadata": {
+                                  "Data Model": {
+                                    "name": "basic_profile""version": "15",
+                                    "created_at": "2022-10-26T15:52:25+00:00",
+                                    "last_modified": "2022-10-26T15:52:25+00:00",
+                                    "status": "existing"
+                                  },
+                                  "Segment": {
+                                    "workspace_ID": "AAA$5554378AA",
+                                    "hubspot_source_id": "BBB5554378AA",
+                                    "zendesk_source_id": "CCC5554378AA",
+                                    "stripe_source_id": "DDD5554378AA",
+                                  }
+                                }
+                              }
+                        </code>
+                      </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <footer class="footer">
+            <div class="text-center">
+              <p class="my-4 text-sm">
+                &copy; <a href="">sagarg@twilio.com</a>
+                - Please feel free to REQUEST NEW SITE FEATURES / REPORT BUGS
+              </p>
+            </div>
+          </footer>
+        </div>
+    </div>
+
+    {% include "includes/scripts.html" %}
+
+    <!-- Specific JS goes HERE -->
+    {% block javascripts %}{% endblock javascripts %}
+</body>
