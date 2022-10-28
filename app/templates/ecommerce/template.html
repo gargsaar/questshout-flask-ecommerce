@@ -33,7 +33,7 @@
 
             {% if config.STRIPE_IS_ACTIVE %}
               <!-- Button trigger modal -->
-               <button type="button" class="btn bg-white text-dark" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="sendTrack('{{product.name}}','{{product.price}}')">
+               <button type="button" class="btn bg-white text-dark" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="sendTrackActivity('{{product.name}}','{{product.price}}')">
                   Buy Product - ${{ product.price }}
                </button>
             {% else %}
@@ -124,7 +124,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn bg-white text-dark" onclick="sendAnalytics()">
+              <button type="button" class="btn bg-white text-dark" onclick="sendAnalyticsIdentity()">
                 {% if config.STRIPE_IS_ACTIVE %}
                 <a id="submitBtn" href="#" class="">
                   Proceed
@@ -264,25 +264,25 @@
     }
   </script>
 
-  <script>
-    let sendAnalytics = () => {
-      id = analytics.user().anonymousId();
-      analytics.identify(id, {
+<script>
+   let sendAnalyticsIdentity = () => {
+    anon_id = analytics.user().anonymousId();
+    analytics.identify(anon_id, {
         email: document.getElementById('user_email').value,
         address: document.getElementById('shipping_address').value,
         first_name: document.getElementById('first_name').value,
         last_name: document.getElementById('last_name').value,
         address_type: document.getElementById('address_type').value
-      });
-    }
-    let sendTrack = (productName, productPrice) => {
-      analytics.track('Checkout', {
+    });
+  };
+  let sendTrackActivity = (productName, productPrice) => {
+    analytics.track('Checkout', {
         method: 'stripe-checkout',
         product: productName,
         price: productPrice
-      });
-    }
-  </script>
+    });
+   }
+</script>
 
 
 {% endblock javascripts %}
