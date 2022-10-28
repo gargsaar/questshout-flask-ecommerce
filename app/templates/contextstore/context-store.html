@@ -30,16 +30,19 @@
 <body class="blog-author bg-gray-100">
     <div class="container">
         <div class="row" style="padding: 1.5em;">
-            <h3 style="background-color: mediumseagreen; padding-left:0.75em;padding-top:0.5em;padding-bottom: 0.5em;">Segment | Context Store (Concept)</h3>
-            <p style="padding-top:0.5em;">Context Store is a knowledge graph to surface a holistic view of a customer's engagement by unifying customer data spread across systems.
-                This can then be used for entity resolution across touch points and building the “Golden Profile”. </p>
+          <h3 style="background-color: mediumseagreen; padding-left:0.75em;padding-top:0.5em;padding-bottom: 0.5em;">Twilio Segment | Context Store (Concept)</h3>
+          <p style="padding-top:0.5em;"> Twilio Segment Context Store converts fragmented data coming from object cloud sources into an <strong>opinionated data model</strong> that seamlessly operates on the data coming from different sources. A data model is a set of rules that represent and validate the structure and format of data. At a high level, data models provide an abstract definition of a real-world object (such as a person) and outline what data should be included in each instance of that object (such as first name, last name, birthday, and so on). This data model that can then be used for improving the identity resolution by stitching together entities across touchpoints to create a holistic identity graph of profiles resolved across systems and building the “Golden Profile” that stitches together data from all sources (first-party data to data from 3P apps) to provide a holistic, accurate, and up-to-date view into user’s journey. </p>
+          <img src="/static/assets/img/context-store/context-store-overview.png" class="img-fluid" alt="context-store-overview.png" style="width:75%">
+          <p style="margin-top:1em;">Context Store contains <strong>Objects</strong> and <strong>Relationships</strong> between Objects.</p>
+          <img src="/static/assets/img/context-store/context-store-components.png" class="img-fluid" alt="context-store-components.png" style="width:75%">
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:3em;">
+          <h3 style="margin-bottom:1em; padding-left:0.7em;"> Context Store Flow:</h3>
             <div class="accordion" id="accordionExample" style="padding-left: 1.5em; padding-right: 2em;">
               <div class="accordion-item" style="padding-bottom: 1.5em;">
                 <h2 class="accordion-header" id="headingThree" style="background-color: lightgrey;">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    STEP 1: Define the Profile Data Model
+                    STEP 1: Define the Data Model
                   </button>
                 </h2>
                 <!-- Modal -->
@@ -90,7 +93,7 @@
                 </div>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <p>The first step is to define the profile data model. A data model is a set of rules that represent and validate the structure and format of data. At a high level, data model provide an abstract definition of a real-world object (such as a person) and outline what data should be included in each instance of that object (such as first name, last name, birthday, and so on).</p>
+                    <p>The first step is to define the data model.</p>
                     <div class="input-group mb-3">
                       <span class="input-group-text" id="basic-addon3">Data Model Name:</span>
                       <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="basic_profile">
@@ -689,6 +692,7 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
+                    <p>The second step is to map the data model with the data coming from the Object Cloud Sources. For example, to map the 'Full Name' field in the 'Person' object, select the 'Hubspot' Source and name related fields. Transform the data as required. </p>
                     <div style="margin-bottom:1em;margin-top:1em;color:darkseagreen;"><b>Data Model Mapping</b></div>
                     <div class="table-responsive" style="height:25em;overflow-y:scroll;">
                       <table class="table table-bordered">
@@ -927,6 +931,7 @@
                       </tbody>
                     </table>
                     </div>
+                    <p style="padding-top:2em;">Next, define Relationships that reflect connection between Objects in the Context Store. For example, the relationship can be defined to know which tickets are opened in Zendesk by a person in Hubspot.</p>
                     <div style="margin-bottom:1em;margin-top:2em;color:darkseagreen;"><b>Object Relationships</b></div>
                     <div class="table-responsive">
                       <table class="table table-bordered">
@@ -956,11 +961,12 @@
               <div class="accordion-item" style="padding-bottom: 1.5em;">
                 <h2 class="accordion-header" id="headingTwo" style="background-color: lightgrey;">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
-                    STEP 3: Data Model Preview
+                    STEP 3: Data Preview
                   </button>
                 </h2>
                 <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
+                    <p>The third step is to test the context store output.</p>
                     <form class="row g-3">
                         <div class="col-auto">
                           <input type="text" class="form-control" id="identifier" placeholder="Identifier">
@@ -1024,12 +1030,16 @@
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
+                    <p>Finally, use the Context API to access the context store datas for an individual profile based on the data model. Context API will provide identities, objects, and relationships that can be used to create the "Golden Profile".</p>
                       <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon3">https://app.segment.com/contextapi/</span>
                         <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="basic_profile/john.doe@fmail.com">
                       </div>
                       <pre>
-                        <code>{
+                        <code>
+                          API Response:
+
+                          {
                                 "dm:identityMap": {
                                   "common_identifier": {
                                       "email": "john.doe@fmail.com"
