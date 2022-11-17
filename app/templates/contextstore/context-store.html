@@ -31,7 +31,7 @@
     <div class="container">
         <div class="row" style="padding: 1.5em;">
           <h3 style="background-color: mediumseagreen; padding-left:0.75em;padding-top:0.5em;padding-bottom: 0.5em;">Twilio Segment | Context Store (Concept)</h3>
-          <p style="padding-top:0.5em;"> Twilio Segment Context Store converts fragmented data coming from object cloud sources into an <strong>opinionated data model</strong> that seamlessly operates on the data coming from different sources. A data model is a set of rules that represent and validate the structure and format of data. At a high level, data models provide an abstract definition of a real-world object (such as a person) and outline what data should be included in each instance of that object (such as first name, last name, birthday, and so on). This data model that can then be used for improving the identity resolution by stitching together entities across touchpoints to create a holistic identity graph of profiles resolved across systems and building the “Golden Profile” that stitches together data from all sources (first-party data to data from 3P apps) to provide a holistic, accurate, and up-to-date view into user’s journey. </p>
+          <p style="padding-top:0.5em;"> Twilio Segment Context Store converts fragmented data coming from object cloud sources into an opinionated <strong>Data Model</strong> that seamlessly operates on the data coming from different sources. A data model is a set of rules that represent and validate the structure and format of data. At a high level, data models provide an abstract definition of a real-world object (such as a person) and outline what data should be included in each instance of that object (such as first name, last name, birthday, and so on). This data model that can then be used for improving the identity resolution by stitching together entities across touchpoints to create a holistic identity graph of profiles resolved across systems and building the “Golden Profile” that stitches together data from all sources (first-party data to data from 3P apps) to provide a holistic, accurate, and up-to-date view into user’s journey. </p>
           <img src="/static/assets/img/context-store/context-store-overview.png" class="img-fluid" alt="context-store-overview.png" style="width:75%">
           <p style="margin-top:1em;">Context Store contains <strong>Objects</strong> and <strong>Relationships</strong> between Objects.</p>
           <img src="/static/assets/img/context-store/context-store-components.png" class="img-fluid" alt="context-store-components.png" style="width:75%">
@@ -139,6 +139,8 @@
                                 <li class="list-group-item">Description [Text]</li>
                                 <li class="list-group-item">Status [Text]</li>
                                 <li class="list-group-item">Product [Text]</li>
+                                <li class="list-group-item">Category [Text]</li>
+                                <li class="list-group-item">Customer ID [Text]</li>
                                 <li class="list-group-item">Created At [Datetime]</li>
                               </ul>
                           </div>
@@ -149,6 +151,9 @@
                                 <li class="list-group-item">Amount [Number]</li>
                                 <li class="list-group-item">Currency [Text]</li>
                                 <li class="list-group-item">Status [Text]</li>
+                                <li class="list-group-item">Product [Text]</li>
+                                <li class="list-group-item">Description [Text]</li>
+                                <li class="list-group-item">Customer [Text]</li>
                                 <li class="list-group-item">Created At [Datetime]</li>
                               </ul>
                           </div>
@@ -1005,6 +1010,8 @@
                               <li class="list-group-item">Description: Not comfortable at all</li>
                               <li class="list-group-item">Status: Open</li>
                               <li class="list-group-item">Product: Nike Dynamo Go FlyEase</li>
+                              <li class="list-group-item">Category: Shoe</li>
+                              <li class="list-group-item">Customer ID: cus_WP90YU</li>
                               <li class="list-group-item">Created At: 22 Oct 2022, 10:05:27</li>
                             </ul>
                            </div>
@@ -1013,8 +1020,11 @@
                            <div class="p-3 border">
                             <ul class="list-group">
                               <li class="list-group-item">Status: Succeed</li>
-                              <li class="list-group-item">Amount: $3500</li>
+                              <li class="list-group-item">Amount: $499</li>
                               <li class="list-group-item">Currency: USD</li>
+                              <li class="list-group-item">Product: Air ZOOM Pegasus</li>
+                              <li class="list-group-item">Description: Online (Website)</li>
+                              <li class="list-group-item">Customer: john.doe@fmail.com</li>
                               <li class="list-group-item">Created At: 24 Oct 2022 16:39:32</li>
                             </ul>
                            </div>
@@ -1070,25 +1080,69 @@
                                     "Description": "Not comfortable at all",
                                     "Status": "Open",
                                     "Product": "Nike Dynamo Go FlyEase",
-                                    "Created At": "2022-10-26T15:52:25+00:00"
+                                    "Category": "Shoe",
+                                    "Customer ID": "cus_WP90YU",
+                                    "Created At": "2022-10-26T15:52:25+00:00",
                                   },
                                   {
                                     "type": "problem",
-                                    "Description": "Quality not up to expectations",
+                                    "Description": "Doesn't like the fit",
                                     "Status": "Open",
-                                    "Product": "Nike Goalkeeper match",
-                                    "Created At": "2022-10-26T15:52:25+00:00"
+                                    "Product": "Air ZOOM Pegasus",
+                                    "Category": "Shoe",
+                                    "Customer ID": "cus_WP90YU",
+                                    "Created At": "2022-06-26T15:52:25+00:00"
                                   }
                                 ],
-                                "object:charges": {
-                                  "Amount": "3500",
-                                  "Currency": "USD",
-                                  "Status": "succeed",
-                                  "Created At": "2022-10-26T15:52:25+00:00"
+                                "object:charges": [
+                                  {
+                                    "Amount": "199",
+                                    "Currency": "USD",
+                                    "Status": "succeed",
+                                    "Product": "Nike Goalkeeper match",
+                                    "Description": "Store Purchase",
+                                    "Customer": ""john.doe@fmail.com",
+                                    "Created At": "2022-11-26T15:52:25+00:00"
+                                  },
+                                  {
+                                    "Amount": "199",
+                                    "Currency": "USD",
+                                    "Status": "succeed",
+                                    "Product": "Paris Saint-German Strike",
+                                    "Description": "Store Purchase",
+                                    "Customer": ""john.doe@fmail.com",
+                                    "Created At": "2022-11-26T15:52:25+00:00"
+                                  },
+                                  {
+                                    "Amount": "599",
+                                    "Currency": "USD",
+                                    "Status": "succeed",
+                                    "Product": "Nike Dynamo Go FlyEase",
+                                    "Description": "Online (Website)",
+                                    "Customer": ""john.doe@fmail.com",
+                                    "Created At": "2022-10-26T15:52:25+00:00"
+                                  },
+                                  {
+                                    "Amount": "499",
+                                    "Currency": "USD",
+                                    "Status": "succeed",
+                                    "Product": "Air ZOOM Pegasus",
+                                    "Description": "Online (Website)",
+                                    "Customer": ""john.doe@fmail.com",
+                                    "Created At": "2022-06-26T15:52:25+00:00"
+                                  },
+                                ],
+                                "dm:relationships": {
+                                    {
+                                      "Object1": "Person",
+                                      "Object2": "Tickets",
+                                      "Condition": "(questshout_hubspot.contacts.email = questshout_zendesk.users.email) && (questshout_zendesk.tickets.status = 'open')",
+                                    }
                                 },
                                 "dm:metadata": {
                                   "Data Model": {
-                                    "name": "basic_profile""version": "15",
+                                    "name": "basic_profile",
+                                    "version": "1",
                                     "created_at": "2022-10-26T15:52:25+00:00",
                                     "last_modified": "2022-10-26T15:52:25+00:00",
                                     "status": "existing"
